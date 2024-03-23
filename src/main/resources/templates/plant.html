@@ -1,0 +1,12 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<h2>Plant added</h2>
+	
+	<p th:text="'Species: ' + ${plant.species}" />
+	<p th:text="'Location: ' + ${plant.location}" />
+	<p th:text="'Date Acquired: ' + ${plant.dateAcquired}" />
+	
+	<a href="/addPlant">Add another plant</a>
+</body>
+</html>

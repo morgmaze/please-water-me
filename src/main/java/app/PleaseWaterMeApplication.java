@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "api")
+@ComponentScan(basePackages = {"api", "config"})
 @EntityScan("model")
 @EnableJpaRepositories("persistence")
 public class PleaseWaterMeApplication {

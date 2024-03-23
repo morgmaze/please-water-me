@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import model.Plant;
 import persistence.PlantRepository;
 
-// TODO: not working
-
 @Configuration
 public class DatabaseConfiguration {
 	
@@ -21,7 +19,7 @@ public class DatabaseConfiguration {
 		log.info("Preloading data");
 		
 		return args -> {
-			repository.save(new Plant("Monstera Deliciosa", "Guest Room", null, null));
+			repository.save(new Plant("Monstera Deliciosa", "Guest Room", null));
 		};
 	}
 	
