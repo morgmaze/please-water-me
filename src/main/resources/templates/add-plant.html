@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<h2>Add a plant</h2>
+
+	<form action="#" th:action="@{/plants}" th:object="${plant}" method="post">
+		<label for="species">Species</label>
+		<input type="text" th:field="*{species}" id="species" placeholder="Species">
+		<span th:if="${#fields.hasErrors('species')}" th:errors="*{species}"></span>
+
+		<label for="location">Location</label>
+		<input type="text" th:field="*{location}" id="location" placeholder="Location">
+		<span th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></span>
+		
+		<label for="dateAcquired">Date Acquired</label>
+		<input type="text" th:field="*{dateAcquired}" id="dateAcquired" placeholder="Date Acquired">
+
+		<input type="submit" value="Add Plant">
+	</form>
+</body>
+</html>

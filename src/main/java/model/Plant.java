@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Plant {
 	
@@ -18,18 +20,17 @@ public class Plant {
 	private String species;
 	@NotNull
 	private String location;
-	private String name;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateAcquired;
 	
 	public Plant() {
 		
 	}
 
-	public Plant(String species, String location, String name, Date dateAcquired) {
+	public Plant(String species, String location, Date dateAcquired) {
 		super();
 		this.species = species;
 		this.location = location;
-		this.name = name;
 		this.dateAcquired = dateAcquired;
 	}
 
@@ -57,14 +58,6 @@ public class Plant {
 		this.location = location;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public Date getDateAcquired() {
 		return dateAcquired;
 	}
@@ -75,7 +68,7 @@ public class Plant {
 
 	@Override
 	public String toString() {
-		return "Plant [id=" + id + ", species=" + species + ", location=" + location + ", name=" + name
+		return "Plant [id=" + id + ", species=" + species + ", location=" + location
 				+ ", dateAcquired=" + dateAcquired + "]";
 	}
 

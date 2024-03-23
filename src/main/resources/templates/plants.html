@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:switch="${plants}">
+		<h2 th:case="null">No plants yet!</h2>
+
+		<div th:case="*">
+			<h2>Plants</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Species</th>
+						<th>Location</th>
+						<th>Date Acquired</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="plant : ${plants}">
+						<td th:text="${plant.species}"></td>
+						<td th:text="${plant.location}"></td>
+						<td th:text="${plant.dateAcquired}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<a href="/addPlant">Add a plant</a>
+</body>
+</html>
