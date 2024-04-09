@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<h2>Record a watering</h2>
+
+	<form action="#" th:action="@{/watering}" method="post"> 
+	<!-- th:object="${watering}" -->
+
+		<label for="plants">Plant:</label>
+		<select>
+			<option th:each="plant : ${plants}"
+					th:value="${plant}"
+					th:text="${plant.species} + ' - ' + ${plant.location}">
+			</option>
+		</select>
+		
+		<label for="dateWatered">Date Watered:</label>
+		<input type="text" id="dateWatered" placeholder="Date Watered"> <!-- th:field="*{dateWatered}" -->
+
+		<input type="submit" value="Record watering">
+	</form>
+
+</body>
+</html>
