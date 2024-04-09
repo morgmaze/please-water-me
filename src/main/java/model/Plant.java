@@ -15,11 +15,14 @@ public class Plant {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
+	
 	@NotNull
 	private String species;
+	
 	@NotNull
 	private String location;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateAcquired;
 	
@@ -34,11 +37,11 @@ public class Plant {
 		this.dateAcquired = dateAcquired;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
