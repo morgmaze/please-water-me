@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<h2>Plant Details</h2>
+	
+	<p th:text="'Species: ' + ${plant.species}" />
+	<p th:text="'Location: ' + ${plant.location}" />
+	<p th:text="'Date Acquired: ' + ${plant.dateAcquired}" />
+
+	<a href="'watering/history?plantId=' + ${plant.id}">View watering history</a>
+	
+</body>
+</html>
