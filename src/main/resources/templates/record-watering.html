@@ -4,19 +4,22 @@
 <body>
 	<h2>Record a watering</h2>
 
-	<form action="#" th:action="@{/watering}" method="post"> 
-	<!-- th:object="${watering}" -->
-
-		<label for="plants">Plant:</label>
-		<select>
-			<option th:each="plant : ${plants}"
-					th:value="${plant}"
-					th:text="${plant.species} + ' - ' + ${plant.location}">
+	<form action="#" th:action="@{/water}" th:object="${watering}" method="post">
+	
+		<label for="plant">Plant:</label>
+		<select th:field="*{plant}">
+			<option id="plant" th:each="p : ${plants}"
+					th:value="${p.id}"
+					th:text="${p.species} + ' - ' + ${p.location}">
 			</option>
 		</select>
 		
+		<br>
+		
 		<label for="dateWatered">Date Watered:</label>
-		<input type="text" id="dateWatered" placeholder="Date Watered"> <!-- th:field="*{dateWatered}" -->
+		<input type="text" id="dateWatered" placeholder="YYYY-MM-dd" th:field="*{dateWatered}" >
+		
+		<br>
 
 		<input type="submit" value="Record watering">
 	</form>

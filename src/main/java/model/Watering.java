@@ -57,4 +57,9 @@ public class Watering {
 		this.dateWatered = dateWatered;
 	}
 
+	@Override
+	public String toString() {
+		return "Watering [id=" + id + ", plant=" + plant + ", dateWatered=" + dateWatered + "]";
+	}
+
 }

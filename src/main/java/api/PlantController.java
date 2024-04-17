@@ -27,17 +27,14 @@ public class PlantController {
 	@Autowired
 	PlantRepository plantRepository;
 	
-//	public PlantController(PlantRepository repository) {
-//		this.repository = repository;
-//	}
-	
+
 	/**
 	 * Add a plant.
 	 * 
 	 * @param newPlant
 	 * @param model
 	 * 
-	 * @return the plant.html page
+	 * @return the plant-added.html page
 	 */
 	@PostMapping("/plants")
 	public String addPlant(@ModelAttribute("plant") Plant newPlant, Model model) {
@@ -48,7 +45,7 @@ public class PlantController {
 		
 		model.addAttribute("plant", newPlant);
 		
-		return "plant";
+		return "plant-added";
 	}
 	
 	/**
