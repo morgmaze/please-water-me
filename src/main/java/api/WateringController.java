@@ -1,6 +1,10 @@
 package api;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import model.Plant;
 import model.Watering;
@@ -27,16 +32,31 @@ public class WateringController {
 	@Autowired
 	PlantRepository plantRepository;
 	
+	/**
+	 * Log a watering for a plant.
+	 * 
+	 * @param newWatering
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/water")
 	public String recordWatering(@ModelAttribute("watering") Watering newWatering, Model model) {
-		logger.info("record watering");
-		
 		// save to database
 		wateringRepository.save(newWatering);
 		
-		// TODO: fix
+		// add it to the model
+		model.addAttribute("newWatering", newWatering);
+		model.addAttribute("plant", newWatering.getPlant());
 		
-		return "watering";
+		return "watering-history";
+	}
+	
+	@GetMapping("/water/history")
+	public List<Watering> getWateringsForPlant(@RequestParam Long plantId) {
+		// get the watering history for the given plant
+		List<Watering> waterings = wateringRepository.findByPlantId(plantId);
+		
+		return waterings;
 	}
 	
 	/**

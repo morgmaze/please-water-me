@@ -8,10 +8,7 @@
 	<p th:text="'Location: ' + ${plant.location}" />
 	<p th:text="'Date Acquired: ' + ${plant.dateAcquired}" />
 
-	<h2>Watering History</h2>
-	
-	<p>2024-03-20</p>
-	<p>2024-03-14</p>
+	<a href="'watering/history?plantId=' + ${plant.id}">View watering history</a>
 	
 </body>
 </html>
