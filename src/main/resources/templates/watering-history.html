@@ -1,0 +1,9 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<h2>Watering recorded</h2>
+	
+	<p th:text="${plant.species} + ' in ' + ${plant.location} + ' was watered on ' + ${newWatering.dateWatered}" />
+
+</body>
