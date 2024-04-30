@@ -1,7 +1,10 @@
 package api;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +20,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import model.Plant;
+import model.Watering;
 import persistence.PlantRepository;
+import persistence.WateringRepository;
 
 @Controller
 public class PlantController {
@@ -27,6 +32,8 @@ public class PlantController {
 	@Autowired
 	PlantRepository plantRepository;
 	
+	@Autowired
+	WateringRepository wateringRepository;
 
 	/**
 	 * Add a plant.
@@ -83,10 +90,16 @@ public class PlantController {
 	@GetMapping("/plants/{id}")
 	public String getPlantById(@PathVariable Long id, Model model) {
 		Optional<Plant> optionalPlant = plantRepository.findById(id);
-		Plant plant = optionalPlant.get();
-		model.addAttribute("plant", plant);
+		if (optionalPlant.isPresent()) {
+			Plant plant = optionalPlant.get();
+			model.addAttribute("plant", plant);
+		}
 		
-		// TODO: pull waterings here as well?
+		// retrieve watering history for this plant
+		List<Watering> wateringHistory = wateringRepository.findByPlantId(id);
+		// add a list of the dates watered for display in the UI
+		List<Date> datesWatered = wateringHistory.stream().map(w -> w.getDateWatered()).collect(Collectors.toList());
+		model.addAttribute("wateringHistory", datesWatered);
 		
 		return "plant-detail";
 	}
