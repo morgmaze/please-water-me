@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import app.Constants;
 import model.FutureWatering;
 import model.Plant;
 import model.Watering;
@@ -34,8 +35,6 @@ public class WateringController {
 	@Autowired
 	FutureWateringRepository futureWateringRepository;
 	
-	// TODO: this will be customizable later
-	static final int REMINDER_TIMEFRAME = 5;
 	
 	/**
 	 * Log a watering for a plant.
@@ -54,7 +53,7 @@ public class WateringController {
 		// schedule the next watering
 		FutureWatering futureWatering = new FutureWatering();
 		futureWatering.setPlant(newWatering.getPlant());
-		futureWatering.setReminderDate(java.sql.Date.valueOf(LocalDate.now().plusDays(REMINDER_TIMEFRAME)));
+		futureWatering.setReminderDate(java.sql.Date.valueOf(LocalDate.now().plusDays(Constants.REMINDER_TIMEFRAME)));
 		futureWateringRepository.save(futureWatering);
 		
 		logger.info("set future watering: " + futureWatering.toString());
