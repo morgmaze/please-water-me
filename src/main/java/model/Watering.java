@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -16,6 +18,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * Represents an instance of watering a plant.
+ * 
+ * @author morganmazer
+ *
+ */
 @Entity
 public class Watering {
 	
@@ -30,6 +38,7 @@ public class Watering {
 	@JsonIgnore
 	private Plant plant;
 	
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateWatered;
 
