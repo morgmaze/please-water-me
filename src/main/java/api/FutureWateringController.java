@@ -22,11 +22,6 @@ public class FutureWateringController {
 		List<FutureWatering> futureWaterings = (List<FutureWatering>) futureWateringRepository.findAll();
 		model.addAttribute("futureWaterings", futureWaterings);
 		
-		System.out.println("Future waterings:");
-		for (FutureWatering f : futureWaterings) {
-			System.out.println(f.toString());
-		}
-		
 		return "future-waterings";
 	}
 

@@ -6,10 +6,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * Represents a plant the user has.
+ * 
+ * @author morganmazer
+ *
+ */
 @Entity
 public class Plant {
 	
@@ -23,6 +31,7 @@ public class Plant {
 	@NotNull
 	private String location;
 	
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateAcquired;
 	
