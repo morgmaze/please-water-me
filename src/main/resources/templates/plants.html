@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
@@ -9,21 +9,18 @@
 
 <body>
 	<div th:insert="navbar :: navbar"></div>
-	
-	<div th:switch="${plants}">
-		<h2 th:case="null">No plants yet!</h2>
 
-		<div th:case="*">
-			<h2>Plants</h2>
-			
-			<div th:each="plant : ${plants}" class="card" style="width: 18rem;">
-				<div class="card-body">
-					<h5 class="card-title" th:text="${plant.species}"></h5>
-					<h6 class="card-subtitle mb-2 text-muted" th:text="${plant.location}"></h6>
-					<a th:href="@{/plants/} + ${plant.id}" class="card-link">View Plant</a>
-				</div>
+	<div th:if="${plants.empty}">
+		<h2>No plants yet!</h2>
+	</div>
+
+	<div th:if="${!plants.empty}">
+		<div th:each="plant : ${plants}" class="card" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title" th:text="${plant.species}"></h5>
+				<h6 class="card-subtitle mb-2 text-muted" th:text="${plant.location}"></h6>
+				<a th:href="@{/plants/} + ${plant.id}" class="card-link">View Plant</a>
 			</div>
-			
 		</div>
 	</div>
 

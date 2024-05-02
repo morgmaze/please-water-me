@@ -55,8 +55,6 @@ public class PlantController {
 	 */
 	@PostMapping("/plants")
 	public String addPlant(@ModelAttribute("plant") Plant newPlant, Model model) {
-		log.info("addPlant");
-		
 		// persist to database
 		Plant saved = plantRepository.save(newPlant);
 		
@@ -156,10 +154,20 @@ public class PlantController {
 //		});
 //	}
 	
-	// TODO: update
-//	@DeleteMapping("/plants/{id}")
-//	public void deletePlant(@PathVariable Long id) {
-//		plantRepository.deleteById(id);
-//	}
+	/**
+	 * Delete a plant by id.
+	 * 
+	 * @param id the id of the plant to delete
+	 * @return the updated all plants page
+	 */
+	@DeleteMapping("/plants/{id}")
+	public String deletePlant(@PathVariable Long id) {
+		log.info("deleting plant with id " + id);
+		
+		plantRepository.deleteById(id);
+		
+		// go to all plants page
+		return "redirect:/plants";
+	}
 
 }

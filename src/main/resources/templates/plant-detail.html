@@ -56,5 +56,11 @@
 		<p>No watering history found for this plant.</p>
 	</div>
 	
+	<br>
+	
+	<form action="#" th:method="delete" th:action="@{'/plants/{id}'(id=${plant.id})}">
+		<button type="submit" class="btn">Delete this plant</button>
+	</form>
+	
 </body>
 </html>
