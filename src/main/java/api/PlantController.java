@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import model.Plant;
+import model.PlantSpeciesCareInformation;
 import model.Watering;
+import persistence.PlantCareDatabase;
 import persistence.PlantRepository;
 import persistence.WateringRepository;
 
@@ -34,12 +36,15 @@ public class PlantController {
 	
 	@Autowired
 	WateringRepository wateringRepository;
+	
+	@Autowired
+	PlantCareDatabase plantCareDatabase;
 
 	/**
 	 * Add a plant.
 	 * 
-	 * @param newPlant
-	 * @param model
+	 * @param newPlant the plant to add
+	 * @param model the Model
 	 * 
 	 * @return the plant-added.html page
 	 */
@@ -48,10 +53,9 @@ public class PlantController {
 		log.info("addPlant");
 		
 		// persist to database
-		plantRepository.save(newPlant);
+		Plant saved = plantRepository.save(newPlant);
 		
-		model.addAttribute("plant", newPlant);
-		// TODO: date format wrong
+		model.addAttribute("plant", saved);
 		
 		return "plant-added";
 	}
@@ -59,7 +63,8 @@ public class PlantController {
 	/**
 	 * Retrieve all plants.
 	 * 
-	 * @param model
+	 * @param model the Model
+	 * 
 	 * @return the plants.html page
 	 */
 	@GetMapping("/plants")
@@ -74,6 +79,8 @@ public class PlantController {
 	/**
 	 * Show the form to add a plant.
 	 * 
+	 * @param model the Model
+	 * 
 	 * @return the add-plant.html page
 	 */
 	@GetMapping("/addPlant")
@@ -86,6 +93,9 @@ public class PlantController {
 	/**
 	 * Get a plant by ID.
 	 * 
+	 * @param id the plant's id
+	 * @param model the Model
+	 * 
 	 * @return the plant-details.html page
 	 */
 	@GetMapping("/plants/{id}")
@@ -94,43 +104,51 @@ public class PlantController {
 		if (optionalPlant.isPresent()) {
 			Plant plant = optionalPlant.get();
 			model.addAttribute("plant", plant);
+			
+			// look up care information for this species
+			Optional<PlantSpeciesCareInformation> optionalCareInfo = plantCareDatabase.findBySpecies(plant.getSpecies());
+			if (optionalCareInfo.isPresent()) {
+				model.addAttribute("careInfo", optionalCareInfo.get());
+			}
+			
+			// retrieve watering history for this plant
+			List<Watering> wateringHistory = wateringRepository.findByPlantId(id);
+			// add a list of the dates watered for display in the UI
+			List<Date> datesWatered = wateringHistory.stream().map(w -> w.getDateWatered()).collect(Collectors.toList());
+			datesWatered.sort((d1, d2) -> (d1.compareTo(d2)));
+			// TODO: return only the 5 most recent waterings
+			model.addAttribute("wateringHistory", datesWatered);
 		}
-		
-		// retrieve watering history for this plant
-		List<Watering> wateringHistory = wateringRepository.findByPlantId(id);
-		// add a list of the dates watered for display in the UI
-		List<Date> datesWatered = wateringHistory.stream().map(w -> w.getDateWatered()).collect(Collectors.toList());
-		model.addAttribute("wateringHistory", datesWatered);
 		
 		return "plant-detail";
 	}
 	
 	// TODO: update
-	@PutMapping("/plants/{id}")
-	public Plant replacePlant(@PathVariable Long id, @RequestBody Plant newPlant) {
-		// TODO: different implementation where i update the desired field(s), not replace
-		// the whole thing
-		
-		return plantRepository.findById(id).map(plant -> {
-			// update all fields but id
-			plant.setSpecies(newPlant.getSpecies());
-			plant.setLocation(newPlant.getLocation());
-			plant.setDateAcquired(newPlant.getDateAcquired());
-			
-			// save the updates to the database
-			return plantRepository.save(plant);
-		}).orElseGet(() -> {
-			// create new plant with given id
-			newPlant.setId(id);
-			
-			return plantRepository.save(newPlant);
-		});
-	}
+//	@PutMapping("/plants/{id}")
+//	public Plant replacePlant(@PathVariable Long id, @RequestBody Plant newPlant) {
+//		// TODO: different implementation where i update the desired field(s), not replace
+//		// the whole thing
+//		
+//		return plantRepository.findById(id).map(plant -> {
+//			// update all fields but id
+//			plant.setSpecies(newPlant.getSpecies());
+//			plant.setLocation(newPlant.getLocation());
+//			plant.setDateAcquired(newPlant.getDateAcquired());
+//			
+//			// save the updates to the database
+//			return plantRepository.save(plant);
+//		}).orElseGet(() -> {
+//			// create new plant with given id
+//			newPlant.setId(id);
+//			
+//			return plantRepository.save(newPlant);
+//		});
+//	}
 	
 	// TODO: update
-	@DeleteMapping("/plants/{id}")
-	public void deletePlant(@PathVariable Long id) {
-		plantRepository.deleteById(id);
-	}
+//	@DeleteMapping("/plants/{id}")
+//	public void deletePlant(@PathVariable Long id) {
+//		plantRepository.deleteById(id);
+//	}
 
 }
