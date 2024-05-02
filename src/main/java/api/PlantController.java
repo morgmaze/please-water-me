@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import model.FutureWatering;
 import model.Plant;
 import model.PlantSpeciesCareInformation;
 import model.Watering;
+import persistence.FutureWateringRepository;
 import persistence.PlantCareDatabase;
 import persistence.PlantRepository;
 import persistence.WateringRepository;
@@ -36,6 +38,9 @@ public class PlantController {
 	
 	@Autowired
 	WateringRepository wateringRepository;
+	
+	@Autowired
+	FutureWateringRepository futureWateringRepository;
 	
 	@Autowired
 	PlantCareDatabase plantCareDatabase;
@@ -118,6 +123,12 @@ public class PlantController {
 			datesWatered.sort((d1, d2) -> (d1.compareTo(d2)));
 			// TODO: return only the 5 most recent waterings
 			model.addAttribute("wateringHistory", datesWatered);
+			
+			// see if there is a watering reminder set for this plant
+			Optional<FutureWatering> optionalFutureWatering = futureWateringRepository.findByPlantId(plant.getId());
+			if (optionalFutureWatering.isPresent()) {
+				model.addAttribute("futureWatering", optionalFutureWatering.get().getReminderDate());
+			}
 		}
 		
 		return "plant-detail";
