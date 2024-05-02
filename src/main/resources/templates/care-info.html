@@ -10,17 +10,10 @@
 <body>
 	<div th:insert="navbar :: navbar"></div>
 	
-	<h2>Plant Details</h2>
-	
-	<p th:text="'Species: ' + ${plant.species}" />
-	<p th:text="'Location: ' + ${plant.location}" />
-	<p th:text="'Date Acquired: ' + ${plant.dateAcquired}" />
-	
-	<br>
-
 	<h2>Care Information</h2>
+	
 	<div th:switch="${careInfo}">
-		<p th:case="null">Sorry, we don't have care information for this species.</p>
+		<p th:case="null">Sorry, we don't have care information for the requested species.</p>
 		
 		<div th:case="${careInfo}">
 			<p th:text="'Species: ' + ${careInfo.species}" />
@@ -33,17 +26,4 @@
 		</div>
 	</div>
 	
-	<br>
-
-	<h2>Watering History</h2>
-	<div th:if="${!wateringHistory.empty}">
-		<div th:each="date : ${wateringHistory}">
-			<p th:text="${date}"></p>
-		</div>
-	</div>
-	<div th:if="${wateringHistory.empty}">
-		<p>No watering history found for this plant.</p>
-	</div>
-	
 </body>
-</html>
