@@ -14,6 +14,12 @@ import app.Constants;
 import model.FutureWatering;
 import persistence.FutureWateringRepository;
 
+/**
+ * A service to check for today's watering reminders and send notifications.
+ * 
+ * @author morganmazer
+ *
+ */
 @Component
 public class WateringReminderService {
 	
@@ -24,7 +30,7 @@ public class WateringReminderService {
 	
 	// for testing: run every minute "0 * * * * *"
 	// run every day at 5 am "0 0 5 * * *"
-	@Scheduled(cron = "0 * * * * *")
+	@Scheduled(cron = "0 0 5 * * *")
 	public void wateringAlertPoller() {
 		log.info("Checking database for today's watering reminders");
 		

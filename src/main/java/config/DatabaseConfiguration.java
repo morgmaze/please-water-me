@@ -28,17 +28,15 @@ public class DatabaseConfiguration {
 		return args -> {
 			// plant 1
 			Plant plant1 = new Plant("Monstera Deliciosa", "Guest Room", null);
-			plantRepository.save(plant1);
+			plant1 = plantRepository.save(plant1);
 			
-			plant1.setId(1L); // would have gotten id 1 after saving
 			futureWateringRepository.save(new FutureWatering(plant1, new Date()));
 			
 			// plant 2
-//			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//			Plant plant2 = new Plant("Snake Plant", "Dining Room", df.parse("2023-09-30"));
-//			plantRepository.save(plant2);
-//			plant2.setId(2L);
-//			futureWateringRepository.save(new FutureWatering(plant2, df.parse("2024-05-15")));
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			Plant plant2 = new Plant("Snake Plant", "Dining Room", df.parse("2023-09-30"));
+			plant2 = plantRepository.save(plant2);
+			futureWateringRepository.save(new FutureWatering(plant2, df.parse("2024-05-15")));
 			
 		};
 	}
