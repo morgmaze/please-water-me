@@ -51,6 +51,7 @@ public class PlantController {
 		plantRepository.save(newPlant);
 		
 		model.addAttribute("plant", newPlant);
+		// TODO: date format wrong
 		
 		return "plant-added";
 	}
