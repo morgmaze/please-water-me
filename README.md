@@ -20,6 +20,10 @@ This project was developed with the following versions of software:
 
 ## To build and run
 
-- `mvn clean spring-boot:run`
+`mvn clean spring-boot:run`
 
 Access the application at http://localhost:8080/
+
+## References
+
+Plant care information was obtained from www.thesill.com
