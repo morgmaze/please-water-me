@@ -1,7 +1,6 @@
 package api;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,8 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import app.Constants;
+import model.FutureWatering;
 import model.Plant;
 import model.Watering;
+import persistence.FutureWateringRepository;
 import persistence.PlantRepository;
 import persistence.WateringRepository;
 
@@ -30,6 +32,10 @@ public class WateringController {
 	@Autowired
 	PlantRepository plantRepository;
 	
+	@Autowired
+	FutureWateringRepository futureWateringRepository;
+	
+	
 	/**
 	 * Log a watering for a plant.
 	 * 
@@ -39,8 +45,18 @@ public class WateringController {
 	 */
 	@PostMapping("/water")
 	public String recordWatering(@ModelAttribute("watering") Watering newWatering, Model model) {
+		logger.info("recordWatering");
+		
 		// save to database
 		wateringRepository.save(newWatering);
+		
+		// schedule the next watering
+		FutureWatering futureWatering = new FutureWatering();
+		futureWatering.setPlant(newWatering.getPlant());
+		futureWatering.setReminderDate(java.sql.Date.valueOf(LocalDate.now().plusDays(Constants.REMINDER_TIMEFRAME)));
+		futureWateringRepository.save(futureWatering);
+		
+		logger.info("set future watering: " + futureWatering.toString());
 		
 		// add it to the model
 		model.addAttribute("newWatering", newWatering);
@@ -49,6 +65,7 @@ public class WateringController {
 		return "watering-history";
 	}
 	
+	// TODO: can't access in browser
 	@GetMapping("/water/history")
 	public List<Watering> getWateringsForPlant(@RequestParam Long plantId) {
 		// get the watering history for the given plant

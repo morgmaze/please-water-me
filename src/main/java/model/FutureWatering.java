@@ -3,12 +3,10 @@ package model;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -16,31 +14,38 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
- * Represents an instance of watering a plant.
+ * Represents a plant watering reminder that will be sent.
  * 
  * @author morganmazer
  *
  */
 @Entity
-public class Watering {
+public class FutureWatering {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 	
-	// one plant can have many waterings
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "plant_id", nullable = false)
+	// a plant only has one future watering at a time
+	@OneToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
 	private Plant plant;
 	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date dateWatered;
+	private Date reminderDate;
+	
+
+	public FutureWatering(Plant plant, Date reminderDate) {
+		super();
+		this.plant = plant;
+		this.reminderDate = reminderDate;
+	}
+	
+	public FutureWatering() {
+		
+	}
 
 	public Long getId() {
 		return id;
@@ -58,17 +63,17 @@ public class Watering {
 		this.plant = plant;
 	}
 
-	public Date getDateWatered() {
-		return dateWatered;
+	public Date getReminderDate() {
+		return reminderDate;
 	}
 
-	public void setDateWatered(Date dateWatered) {
-		this.dateWatered = dateWatered;
+	public void setReminderDate(Date reminderDate) {
+		this.reminderDate = reminderDate;
 	}
 
 	@Override
 	public String toString() {
-		return "Watering [id=" + id + ", plant=" + plant + ", dateWatered=" + dateWatered + "]";
+		return "FutureWatering [id=" + id + ", plant=" + plant + ", reminderDate=" + reminderDate + "]";
 	}
 
 }
