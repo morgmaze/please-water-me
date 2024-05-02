@@ -17,6 +17,17 @@
 	<p th:text="'Date Acquired: ' + ${plant.dateAcquired}" />
 	
 	<br>
+	
+	<p>Please water me again on:</p>
+	<div th:switch="${futureWatering}">
+		<p th:case="null">No watering reminder set. Record a watering for this plant to get watering reminders!</p>
+	
+		<div th:case="${futureWatering}">
+			<p th:text="${futureWatering}" />
+		</div>
+	</div>
+	
+	<br>
 
 	<h2>Care Information</h2>
 	<div th:switch="${careInfo}">
