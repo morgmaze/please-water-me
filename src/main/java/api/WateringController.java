@@ -48,7 +48,7 @@ public class WateringController {
 		logger.info("recordWatering");
 		
 		// save to database
-		wateringRepository.save(newWatering);
+		Watering watering = wateringRepository.save(newWatering);
 		
 		// schedule the next watering
 		FutureWatering futureWatering = new FutureWatering();
@@ -59,7 +59,7 @@ public class WateringController {
 		logger.info("set future watering: " + futureWatering.toString());
 		
 		// add it to the model
-		model.addAttribute("newWatering", newWatering);
+		model.addAttribute("newWatering", watering);
 		model.addAttribute("plant", newWatering.getPlant());
 		
 		return "watering-history";
