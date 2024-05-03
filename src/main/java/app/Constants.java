@@ -15,7 +15,7 @@ public final class Constants {
 	// FROM_EMAIL app password
 	public static final String PASSWORD = "juricpsyajivlghz";
 	
-	// TODO: this will be customizable later
+	// the default reminder time frame
 	public static final int REMINDER_TIMEFRAME = 5;
 	
 }

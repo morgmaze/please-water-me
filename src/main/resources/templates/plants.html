@@ -14,8 +14,8 @@
 		<h2>No plants yet!</h2>
 	</div>
 
-	<div th:if="${!plants.empty}">
-		<div th:each="plant : ${plants}" class="card" style="width: 18rem;">
+	<div class="row justify-content-center p-4" th:if="${!plants.empty}">
+		<div th:each="plant : ${plants}" class="card mr-2" style="width: 18rem;">
 			<div class="card-body">
 				<h5 class="card-title" th:text="${plant.species}"></h5>
 				<h6 class="card-subtitle mb-2 text-muted" th:text="${plant.location}"></h6>
