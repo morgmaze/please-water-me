@@ -20,6 +20,18 @@ public class GmailUtil {
 		
 	}
 
+	/**
+	 * Send an email to a recipient from the specified Gmail account.
+	 * 
+	 * @param to the recipient's address
+	 * @param from the Gmail account to send from
+	 * @param fromPassword the password to the Gmail account to send from
+	 * @param subject the email's subject
+	 * @param body the body of the email
+	 * @param isBodyHTML a flag indicating if the body is HTML
+	 * 
+	 * @throws MessagingException if something goes wrong
+	 */
 	public void sendEmail(String to, String from, String fromPassword,
             String subject, String body, boolean isBodyHTML)
             throws MessagingException {

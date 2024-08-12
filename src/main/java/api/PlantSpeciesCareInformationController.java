@@ -17,6 +17,13 @@ public class PlantSpeciesCareInformationController {
 	@Autowired
 	PlantCareDatabase plantCareDatabase;
 	
+	/**
+	 * Retrieve care information for the given species.
+	 * 
+	 * @param species the plant species
+	 * @param model the Model
+	 * @return the care-info.html page with the {@link PlantSpeciesCareInformation}, if it exists
+	 */
 	@GetMapping("/plantCare")
 	public String getPlantSpeciesCareInformation(@RequestParam String species, Model model) {
 		Optional<PlantSpeciesCareInformation> optionalCareInfo = plantCareDatabase.findBySpecies(species);

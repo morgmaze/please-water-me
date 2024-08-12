@@ -81,15 +81,7 @@ public class WateringController {
 		
 		return "watering-history";
 	}
-	
-	// TODO: can't access in browser
-	@GetMapping("/water/history")
-	public List<Watering> getWateringsForPlant(@RequestParam Long plantId) {
-		// get the watering history for the given plant
-		List<Watering> waterings = wateringRepository.findByPlantId(plantId);
-		
-		return waterings;
-	}
+
 	
 	/**
 	 * Show the form to record a watering.
