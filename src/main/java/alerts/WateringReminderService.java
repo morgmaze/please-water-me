@@ -7,10 +7,10 @@ import javax.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import app.Constants;
 import model.FutureWatering;
 import persistence.FutureWateringRepository;
 
@@ -25,6 +25,19 @@ public class WateringReminderService {
 	
 	private static final Logger log = LoggerFactory.getLogger(WateringReminderService.class);
 	
+	// the user's email
+	@Value("${notification.to.email}")
+	private String TO_EMAIL;
+		
+	// from email address
+	@Value("${notification.from.email}")
+	private String FROM_EMAIL;
+	
+	// from email address
+	@Value("${notification.from.password}")
+	private String FROM_PASSWORD;
+	
+
 	@Autowired
 	FutureWateringRepository futureWateringRepository;
 	
@@ -50,9 +63,10 @@ public class WateringReminderService {
 		String body = constructEmailBody(reminder);
 		
 		try {
-        	GmailUtil.sendEmail(Constants.TO_EMAIL, Constants.FROM_EMAIL, subject, body, false);
+			GmailUtil gmailUtil = new GmailUtil();
+        	gmailUtil.sendEmail(TO_EMAIL, FROM_EMAIL, FROM_PASSWORD, subject, body, false);
         } catch (MessagingException e) {
-        	System.out.println("Unable to send email");
+        	log.info("Unable to send email");
         	e.printStackTrace();
         }
 	}

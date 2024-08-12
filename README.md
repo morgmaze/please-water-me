@@ -24,6 +24,7 @@ This application sends plant watering reminders from an application email accoun
 
 1. Create a Gmail account for the application. It is not advised to use your personal email.
 1. Add an app password for the account.
+1. Update the following in src/main/resources/application.properties: notification.to.email (the address you'd like to receive notifications to), notification.from.email (the application email account you created), notification.from.password (the app password)
 1. In Constants.java, set FROM_EMAIL to be this Gmail account and PASSWORD to the app password you created.
 1. In Constants.java, set TO_EMAIL to the address you would like to receive plant watering reminders to.
 

@@ -9,11 +9,18 @@ import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import app.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GmailUtil {
+	
+	private static final Logger log = LoggerFactory.getLogger(GmailUtil.class);
+	
+	public GmailUtil() {
+		
+	}
 
-	public static void sendEmail(String to, String from,
+	public void sendEmail(String to, String from, String fromPassword,
             String subject, String body, boolean isBodyHTML)
             throws MessagingException {
         
@@ -44,7 +51,7 @@ public class GmailUtil {
 
         // send the message
         Transport transport = session.getTransport();
-        transport.connect(Constants.FROM_EMAIL, Constants.PASSWORD);
+        transport.connect(from, fromPassword);
         transport.sendMessage(message, message.getAllRecipients());
         transport.close();
     }

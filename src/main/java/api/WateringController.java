@@ -47,11 +47,10 @@ public class WateringController {
 	 * 
 	 * @param newWatering
 	 * @param model
-	 * @return
+	 * @return the watering-history.html page
 	 */
 	@PostMapping("/water")
 	public String recordWatering(@ModelAttribute("watering") Watering newWatering, Model model) {
-		logger.info("recordWatering");
 		
 		// save to database
 		Watering watering = wateringRepository.save(newWatering);
